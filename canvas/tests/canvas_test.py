@@ -10,7 +10,7 @@ class CanvasTest(unittest.TestCase):
     """Tests for canvas."""
 
     def setUp(self):
-        self.canvas = Canvas()
+        self.canvas = Canvas(None, 10, 10)
 
     def test_is_instance(self):
         self.assertTrue(isinstance(self.canvas, Canvas))
