@@ -35,7 +35,7 @@ class CanvasCompositing(object):
     @globalAlpha.setter
     def globalAlpha(self, val):
         if isinstance(val, float) and 0.0 < val < 1.0:
-            self._lineWidth = val
+            self._globalAlpha = val
 
     @property
     def globalCompositeOperation(self):
