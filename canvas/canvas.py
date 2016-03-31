@@ -39,7 +39,7 @@ class Canvas(object):
         if contextType is '2d':
             return CanvasRenderingContext2D(self)
 
-        return null
+        return None
 
     def  probablySupportsContext(self, contextType):
         """

@@ -13,7 +13,7 @@ class Uint8ClampedArrayTest(unittest.TestCase):
         self.clampedArray[2] = 350 # Should get clamped at 255
 
     def test_is_instance(self):
-        self.assertTrue(isinstance(self.clampedArray, Uint8ClampedArray))
+        self.assertIsInstance(self.clampedArray, Uint8ClampedArray)
 
     def test_get_values(self):
         self.assertEqual(self.clampedArray[0], 0)

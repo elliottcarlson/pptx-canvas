@@ -42,9 +42,6 @@ class CanvasRenderingContext2D(CanvasState, CanvasTransform, CanvasCompositing,
     def __init__(self, canvas):
         self._canvas = canvas
 
-        pprint(" -- SLIDE: --")
-        pprint(self._canvas._slide)
-
         """Construct a Canvas instance."""
         self._shadowColor = '000000'
         self._shadowBlur = 0
