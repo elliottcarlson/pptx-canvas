@@ -1,10 +1,9 @@
-"""Tests for letsencrypt.client."""
 import os
 import shutil
 import tempfile
 import unittest
 
-from canvas import Canvas
+from canvas.canvas import Canvas
 
 class CanvasTest(unittest.TestCase):
     """Tests for canvas."""
