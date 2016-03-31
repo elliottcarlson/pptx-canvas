@@ -17,4 +17,4 @@ Base Setup
 Compatibility
 -------------
 
-- Python: 2.7, 3.2, 3.3, 3.4, 3.5
+- Python: 2.7, 3.3, 3.4, 3.5
