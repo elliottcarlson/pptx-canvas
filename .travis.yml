@@ -10,7 +10,7 @@ python:
   - "3.5-dev" # 3.5 development branch
   - "nightly" # currently points to 3.6-dev
 script:
- - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then python -m unittest discover -s tests -p *_test.py; fi
+ - python -m unittest discover -s tests -p *_test.py
 notifications:
   email: 
     - travisci@sublim.nl
