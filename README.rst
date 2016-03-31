@@ -7,6 +7,7 @@ PPTX-Canvas
 Base Setup
 ----------
 .. code-block:: bash
+
     ~$ git clone https://github.com/elliottcarlson/pptx-canvas.git
     ~$ cd pptx-canvas
     ~/pptx-canvas$ virtualenv venv
