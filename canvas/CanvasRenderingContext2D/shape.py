@@ -1,7 +1,7 @@
 """
 PresentationML Shape Builder
 """
-
+from six import iteritems
 from lxml import etree, objectify
 from lxml.builder import ElementMaker
 
@@ -147,7 +147,7 @@ class Shape(object):
         elif scrgbClr:
             s = '<a:scrgbClr %s r="%.0f" g="%.0f" b="%.0f"/>' % ((ns,) + tuple(scrgbClr))
         color = objectify.fromstring(s)
-        for arg, val in mod.iteritems():
+        for arg, val in iteritems(mod):
             if val is True:
                 color.append(etree.fromstring('<a:%s %s/>' % (arg, ns)))
             else:

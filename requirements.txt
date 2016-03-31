@@ -1,5 +1,4 @@
 colour==0.1.2
-enum==0.4.6
 lxml==3.5.0
 Pillow==3.1.1
 python-pptx==0.5.8

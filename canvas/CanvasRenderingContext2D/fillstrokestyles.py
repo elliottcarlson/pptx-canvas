@@ -3,8 +3,8 @@
 CanvasFillStrokeStyles
 ======================
 """
-from gradient import CanvasGradient
-from pattern import CanvasPattern
+from .gradient import CanvasGradient
+from .pattern import CanvasPattern
 from colour import Color
 
 class CanvasFillStrokeStyles(object):

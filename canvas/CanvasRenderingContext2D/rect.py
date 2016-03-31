@@ -3,7 +3,7 @@
 CanvasRect
 ==========
 """
-from shape import Shape
+from .shape import Shape
 from pprint import pprint
 
 class CanvasRect(object):

@@ -3,23 +3,23 @@
 CanvasRenderingContext2D
 ========================
 """
-from state import CanvasState
-from transform import CanvasTransform
-from compositing import CanvasCompositing
-from imagesmoothing import CanvasImageSmoothing
-from fillstrokestyles import CanvasFillStrokeStyles
-from shadowstyles import CanvasShadowStyles
-from rect import CanvasRect
-from drawpath import CanvasDrawPath
-from userinterface import CanvasUserInterface
-from text import CanvasText
-from drawimage import CanvasDrawImage
-from hitregion import CanvasHitRegion
+from .state import CanvasState
+from .transform import CanvasTransform
+from .compositing import CanvasCompositing
+from .imagesmoothing import CanvasImageSmoothing
+from .fillstrokestyles import CanvasFillStrokeStyles
+from .shadowstyles import CanvasShadowStyles
+from .rect import CanvasRect
+from .drawpath import CanvasDrawPath
+from .userinterface import CanvasUserInterface
+from .text import CanvasText
+from .drawimage import CanvasDrawImage
+from .hitregion import CanvasHitRegion
 
 
-from gradient import CanvasGradient
-from pattern import CanvasPattern
-from shape import Shape
+from .gradient import CanvasGradient
+from .pattern import CanvasPattern
+from .shape import Shape
 
 from pprint import pprint
 from lxml.builder import ElementMaker

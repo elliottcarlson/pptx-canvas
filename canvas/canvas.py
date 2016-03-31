@@ -5,7 +5,7 @@ Canvas
 
 HTML Canvas compatbile interface to drawing on PPTX slides.
 """
-from CanvasRenderingContext2D import CanvasRenderingContext2D
+from .CanvasRenderingContext2D import CanvasRenderingContext2D
 
 class Canvas(object):
     def __init__(self, slide, height, width):

@@ -1,2 +1,2 @@
-from context import CanvasRenderingContext2D
+from .context import CanvasRenderingContext2D
 

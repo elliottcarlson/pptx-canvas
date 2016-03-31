@@ -3,7 +3,7 @@
 CanvasDrawPath
 ==============
 """
-from path import CanvasPath
+from .path import CanvasPath
 
 class CanvasDrawPath(CanvasPath):
     """
