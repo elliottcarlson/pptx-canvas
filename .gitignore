@@ -1,0 +1,5 @@
+venv/
+*.pyc
+token
+output.pptx
+_shapes_pptx/

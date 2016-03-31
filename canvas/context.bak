@@ -1,0 +1,173 @@
+"""
+========================
+CanvasRenderingContext2D
+========================
+"""
+from 2d import CanvasState
+
+
+from gradient import CanvasGradient
+from pattern import CanvasPattern
+from shape import Shape
+
+from pprint import pprint
+from lxml.builder import ElementMaker
+
+class CanvasRenderingContext2D(object):
+    ## OpenXML NameSpace map
+    nsmap = {
+        'p': 'http://schemas.openxmlformats.org/presentationml/2006/main',
+        'a': 'http://schemas.openxmlformats.org/drawingml/2006/main',
+        'r': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships',
+    }
+
+    '''
+    Implements a HTML <canvas> interface to drawing on PresentationML/DrawingML
+    based PPTX slides.
+    '''
+    def __init__(self, canvas):
+        self._canvas = canvas
+
+        pprint(" -- SLIDE: --")
+        pprint(self._canvas._slide)
+
+        """Construct a Canvas instance."""
+        self._fillStyle = '000000'
+        self._strokeStyle = '000000'
+        self._shadowColor = '000000'
+        self._shadowBlur = 0
+        self._shadowOffsetX = 0
+        self._shadowOffsetY = 0
+
+        self._lineWidth = 12700
+
+    @property
+    def canvas(self):
+        """
+        A read-only reference to the PPTXCanvas object this Context exists on.
+        """
+        return self._canvas
+
+    @property
+    def lineWidth(self):
+        '''
+        Returns the current line width value.
+        Default value is 12700 EMU.
+        '''
+        return self._lineWidth
+
+    @lineWidth.setter
+    def lineWidth(self, val):
+        '''
+        '''
+        self._lineWidth = val
+
+    @property
+    def fillStyle(self):
+        '''
+        Returns the current style used for filling shapes.
+        Default value is #000 (black).
+        '''
+        return self._fillStyle
+
+    @fillStyle.setter
+    def fillStyle(self, obj):
+        '''
+        The fillStyle property specifies the color or style to use inside
+        shapes. The expected value can be either a string containing a CSS
+        color, or a CanvasGradient or CanvasPattern object. Invalid values
+        are ignored.
+        Possible fillStyle values:
+            color
+                A string parsed as CSS <color> value.
+            gradient
+                A `CanvasGradient` object (a linear or radial gradient).
+            pattern
+                A `CanvasPattern` object (a repetitive image).
+        '''
+        if type(obj) is str:
+            self._fillStyle = obj
+        elif isinstance(obj, CanvasGradient) or isinstance(obj, CanvasPattern):
+            self._fillStyle = obj
+        else:
+            ## When an invalid value is passed, we leave the value unchanged and
+            ## follow spec by not creating errors and keeping the prior value.
+            pass
+
+    @property
+    def strokeStyle(self):
+        '''
+        Returns the current style used for stroking shapes.
+        Default value is #000 (black)
+        '''
+        return self._strokeStyle
+
+    @strokeStyle.setter
+    def strokeStyle(self, obj):
+        '''
+        The fillStyle property specifies the color or style to use inside
+        shapes. The expected value can be either a string containing a CSS
+        color, or a CanvasGradient or CanvasPattern object. Invalid values
+        are ignored.
+        Possible fillStyle values:
+            color
+                A string parsed as CSS <color> value.
+            gradient
+                A `CanvasGradient` object (a linear or radial gradient).
+            pattern
+                A `CanvasPattern` object (a repetitive image).
+        '''
+        if type(obj) is str:
+            self._strokeStyle = obj
+        elif isinstance(obj, CanvasGradient) or isinstance(obj, CanvasPattern):
+            self._strokeStyle = obj;
+        else:
+            ## When an invalid value is passed, we leave the value unchanged and
+            ## follow spec by not creating errors and keeping their prior value.
+            pass
+
+
+    def fillRect(self, x, y, width, height):
+        """
+        Draw a filled rectangle at (x, y) position whose size is determined by
+        width and height and whose style is determined by the fillStyle
+        attribute.
+
+        Parameters
+        ----------
+        x : int
+            The x axis of the coordinate for the rectangle starting point.
+        y : int
+            The y axis of the coordinate for the rectangle starting point.
+        width : int
+            The rectangle's width.
+        height : int
+            The rectangle's height.
+        """
+        shapes = self._canvas._slide._element.find('.//p:spTree', namespaces=self.nsmap)
+        new_shape = Shape()
+
+        shp = new_shape.prstGeom('rect', x, y, width - x, height - y)
+        shp.spPr.append(new_shape._a.ln(new_shape._a.solidFill(new_shape.color(srgbClr=self._strokeStyle)), w=str(self._lineWidth)))
+
+
+        pprint(shp.spPr)
+        #shp.fill.solid()
+        #shp.fill.fore_color.rgb = RGBColor.from_string('3C2F80')
+
+        pprint(shp)
+        shapes.append(shp)
+
+        pass
+
+
+
+
+
+    def createLinearGradient(self, x0, y0, x1, y1):
+        '''
+        The createLinearGradient() method creates a linear gradient object.
+        The gradient can be used to fill rectangles, circles, lines, text, etc.
+        Tip: Use this object as the value to the `strokeStyle` or `fillStyle` properties.
+        '''
+        pass
