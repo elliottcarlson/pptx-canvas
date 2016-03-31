@@ -13,4 +13,7 @@ Base Setup
     ~/pptx-canvas$ source venv/bin/activate
     (venv):~/pptx-canvas$ pip install -r requirements.txt
 
+Compatibility
+-------------
 
+- Python: 2.7, 3.2, 3.3, 3.4, 3.5
