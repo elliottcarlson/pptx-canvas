@@ -3,7 +3,7 @@
 CanvasImageData
 ===============
 """
-from uint8clampedarray import Uint8ClampedArray
+from canvas.lib.uint8clampedarray import Uint8ClampedArray
 
 class IndexSizeError(Exception):
     pass
