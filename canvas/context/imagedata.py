@@ -3,7 +3,14 @@
 CanvasImageData
 ===============
 """
-class ImageData(object):
+from canvas.lib.uint8clampedarray import Uint8ClampedArray
+from canvas.lib.imagedata import ImageData
+
+class IndexSizeError(Exception):
+    pass
+
+class InvalidStateError(Exception):
+    pass
 
 class CanvasImageData(object):
     """
@@ -14,7 +21,8 @@ class CanvasImageData(object):
         ImageData createImageData(ImageData imagedata);
         ImageData getImageData(double sx, double sy, double sw, double sh);
         void putImageData(ImageData imagedata, double dx, double dy);
-        void putImageData(ImageData imagedata, double dx, double dy, double dirtyX, double dirtyY, double dirtyWidth, double dirtyHeight);
+        void putImageData(ImageData imagedata, double dx, double dy, double
+            dirtyX, double dirtyY, double dirtyWidth, double dirtyHeight);
     };
     """
 
@@ -22,7 +30,7 @@ class CanvasImageData(object):
         if type(self) == CanvasImageData:
             raise Exception('<CanvasImageData> must be subclassed.')
 
-    def createImageData(self, sw, sh):
+    def createImageData(self, sw=0, sh=0, imagedata=None):
         """
         Returns an ImageData object with the given dimensions. All the pixels in
         the returned object are transparent black.
@@ -30,19 +38,21 @@ class CanvasImageData(object):
         Throws an IndexSizeError exception if either of the width or height
         arguments are zero.
         """
+        if isinstance(imagedata, ImageData):
+            sw = imagedata.width
+            sh = imagedata.height
+
+        if sw is 0 or sh is 0:
+            raise IndexSizeError()
+
         return ImageData(sw, sh)
         pass
 
-    def strokeText(self, text, x, y, maxWidth=None):
-        """
-        Strokes the given text at the given position. If a maximum width is
-        provided, the text will be scaled to fit that width if necessary.
-        """
+    def getImageData(self, sx, sy, sw, sh):
         pass
 
-    def measureText(self, text):
-        """
-        Returns a TextMetrics object with the metrics of the given text in the
-        current font.
-        """
+    def putImageData(self, imagedata, dx, dy, dirtyX=None, dirtyY=None,
+            dirtyWidth=None, dirtyHeight=None):
+        if not isinstance(imagedata, ImageData):
+            raise InvalidStateError()
         pass

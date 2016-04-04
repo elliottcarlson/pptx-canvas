@@ -15,7 +15,7 @@ from .userinterface import CanvasUserInterface
 from .text import CanvasText
 from .drawimage import CanvasDrawImage
 from .hitregion import CanvasHitRegion
-
+from .imagedata import CanvasImageData
 
 from .gradient import CanvasGradient
 from .pattern import CanvasPattern
@@ -27,7 +27,7 @@ from lxml.builder import ElementMaker
 class CanvasRenderingContext2D(CanvasState, CanvasTransform, CanvasCompositing,
         CanvasImageSmoothing, CanvasFillStrokeStyles, CanvasShadowStyles,
         CanvasRect, CanvasDrawPath, CanvasUserInterface, CanvasText,
-        CanvasDrawImage, CanvasHitRegion):
+        CanvasDrawImage, CanvasHitRegion, CanvasImageData):
     ## OpenXML NameSpace map
     nsmap = {
         'p': 'http://schemas.openxmlformats.org/presentationml/2006/main',

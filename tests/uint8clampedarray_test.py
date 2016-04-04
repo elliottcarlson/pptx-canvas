@@ -1,7 +1,7 @@
 """Tests for Canvas.CanvasRenderingContext2D.Uint8ClampedArray"""
 
 import unittest
-from canvas.context.uint8clampedarray import Uint8ClampedArray
+from canvas.lib.uint8clampedarray import Uint8ClampedArray
 
 class Uint8ClampedArrayTest(unittest.TestCase):
     """Tests for Uint8ClampedArray"""
