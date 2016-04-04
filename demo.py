@@ -17,7 +17,10 @@ if __name__ == '__main__':
     pprint(ctx.fillStyle)
 
     ctx.lineWidth = Pt(4)
-    pprint(ctx.lineWidth)
+    pprint(dict((k, ctx.__dict__['_' + k]) for k in ctx._keys if '_' + k in ctx.__dict__))
+
+
+
 #    pprint(Length(ctx.lineWidth).pt())
 
     ctx.fillRect(Pt(100), Pt(100), Pt(150), Pt(250))

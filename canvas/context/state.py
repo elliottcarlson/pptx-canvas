@@ -29,6 +29,8 @@ To save (push) the current state to the stack, call:
 To restore the canvas by "popping" the last state saved to the stack, use:
     context.restore()
 """
+
+from pprint import pprint
 class CanvasState(object):
     """
     [NoInterfaceObject]
@@ -38,19 +40,34 @@ class CanvasState(object):
         void restore(); // pop state stack and restore state
     };
     """
+    _keys = (
+        'globalAlpha', 'globalCompositeOperation', 'strokeStyle', 'textAlign',
+        'textBaseline', 'lineCap', 'lineJoin', 'lineWidth', 'miterLimit',
+        'fillStyle', 'font', 'shadowBlur', 'shadowColor', 'shadowOffsetX',
+        'shadowOffsetY'
+    )
 
     def __init__(self):
         if type(self) == CanvasState:
             raise Exception('<CanvasState> must be subclassed.')
+        self._stack = []
 
     def save(self):
         """
         Push state on state stack.
         """
-        pass
+        # self._stack.append(dict(self.ctx))
+        self._stack.append(dict((k, self.__dict__['_' + k]) for k in self._keys
+            if '_' + k in self.__dict__))
 
     def restore(self):
         """
         Pop state and restore state.
         """
-        pass
+        if len(self._stack) == 0:
+            return
+
+        _dict = self._stack.pop()
+        for k, v in _dict.items():
+            setattr(self, '_' + k, v)
+

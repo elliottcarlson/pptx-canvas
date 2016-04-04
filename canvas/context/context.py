@@ -40,6 +40,8 @@ class CanvasRenderingContext2D(CanvasState, CanvasTransform, CanvasCompositing,
     based PPTX slides.
     '''
     def __init__(self, canvas):
+        super(CanvasRenderingContext2D, self).__init__()
+
         self._canvas = canvas
 
         """Construct a Canvas instance."""
