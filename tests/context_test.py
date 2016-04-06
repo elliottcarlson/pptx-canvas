@@ -22,11 +22,9 @@ class ContextTest(unittest.TestCase):
     def test_is_instance(self):
         self.assertIsInstance(self.context, CanvasRenderingContext2D)
 
-    def set_canvas_value(self):
-        self.context.canvas = None
-
     def test_is_canvas_read_only_property(self):
-        self.assertRaises(AttributeError, self.set_canvas_value)
+        with self.assertRaises(AttributeError):
+            self.context.canvas = None
 
 if __name__ == "__main__" and __package__ is None:
     unittest.main()  # pragma: no cover
