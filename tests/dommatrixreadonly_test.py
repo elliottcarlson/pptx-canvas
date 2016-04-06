@@ -7,6 +7,7 @@ class DOMMatrixReadOnlyTest(unittest.TestCase):
     """Tests for DOMMatrixReadOnly"""
     matrix_args_2d = [ 1, 2, 3, 4, 5, 6 ]
     matrix_args_3d = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
+    matrix_args_identity = [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ]
 
     def setUp(self):
         self.matrix_2d = DOMMatrixReadOnly(*self.matrix_args_2d)
@@ -27,6 +28,14 @@ class DOMMatrixReadOnlyTest(unittest.TestCase):
     def test_typeerror_on_bad_instanciation(self):
         with self.assertRaises(TypeError):
             _matrix = DOMMatrixReadOnly(None)
+
+    def test_identity(self):
+        _matrix = DOMMatrixReadOnly(*self.matrix_args_identity)
+        self.assertTrue(_matrix.isIdentity)
+
+    def test_no_identity(self):
+        self.assertFalse(self.matrix_2d.isIdentity)
+        self.assertFalse(self.matrix_3d.isIdentity)
 
 if __name__ == "__main__" and __package__ is None:
     unittest.main()  # pragma: no cover

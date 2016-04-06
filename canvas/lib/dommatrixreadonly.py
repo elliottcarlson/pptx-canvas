@@ -77,7 +77,6 @@ class DOMMatrixReadOnly:
     }
 
     _is2D = False
-    _isIdentity = False
 
     def __init__(self, *args):
         """
@@ -123,6 +122,7 @@ class DOMMatrixReadOnly:
             self._matrix['m44'] = 1
 
             self._is2D = True
+
         elif len(args) is 16:
             self._matrix['m11'] = args[0]
             self._matrix['m12'] = args[1]
@@ -239,7 +239,19 @@ class DOMMatrixReadOnly:
 
     @property
     def isIdentity(self):
-        return self._isIdentity
+        """
+        Returns true if m12, m13, m14, m21, m23, m24, m31, m32, m34, m41, m42,
+        m43 are 0 and m11, m22, m33, m44 are 1. Otherwise returns false.
+        """
+        _m = self._matrix
+
+        if (_m['m12'] == _m['m13'] == _m['m14'] == _m['m21'] ==
+            _m['m23'] == _m['m24'] == _m['m31'] == _m['m32'] ==
+            _m['m34'] == _m['m41'] == _m['m42'] == _m['m42'] == 0) and (
+            _m['m11'] == _m['m22'] == _m['m33'] == _m['m44'] == 1):
+            return True
+
+        return False
 
     def multiply(self, other):
         pass
