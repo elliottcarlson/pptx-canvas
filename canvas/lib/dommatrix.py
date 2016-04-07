@@ -3,7 +3,7 @@
 DOMMatrixReadOnly
 =================
 """
-from dommatrixreadonly import DOMMatrixReadOnly
+from .dommatrixreadonly import DOMMatrixReadOnly
 import re
 
 class DOMMatrix(DOMMatrixReadOnly):
