@@ -271,7 +271,7 @@ class DOMMatrixReadOnly(object):
         ])
 
     def multiply(self, other):
-        from dommatrix import DOMMatrix
+        from .dommatrix import DOMMatrix
         _m = np.dot(self._np_array(other), self._np_array())
         return DOMMatrix(*_m.flatten())
 
