@@ -5,12 +5,11 @@ DOMMatrixReadOnly
 """
 from dommatrixreadonly import DOMMatrixReadOnly
 import re
-from pprint import pprint
 
 class DOMMatrix(DOMMatrixReadOnly):
 
-    def __init__(self, *args):
-        super(DOMMatrix, self).__init__(*args)
+    def __init__(self, *args, **kwargs):
+        super(DOMMatrix, self).__init__(*args, **kwargs)
 
     def __setattr__(self, key, value):
         match = re.search(r'^m[1-4][1-4]$', key)

@@ -50,6 +50,20 @@ class DOMMatrixReadOnlyTest(unittest.TestCase):
         with self.assertRaises(AttributeError):
             self.matrix_2d.isIdentity = None
 
+    def test_multiply(self):
+        _m1 = DOMMatrixReadOnly(1, 2, 3, 4, 5, 6)
+        _m2 = DOMMatrixReadOnly(1, 0, 0, 0, 0, 0)
+        _m3 = _m1.multiply(_m2)
+
+        _expected = {
+            'm11': 1, 'm12': 2, 'm13': 0, 'm14': 0,
+            'm21': 0, 'm22': 0, 'm23': 0, 'm24': 0,
+            'm31': 0, 'm32': 0, 'm33': 1, 'm34': 0,
+            'm41': 5, 'm42': 6, 'm43': 0, 'm44': 1
+        }
+
+        self.assertEqual(_m3._matrix, _expected)
+
 if __name__ == "__main__" and __package__ is None:
     unittest.main()  # pragma: no cover
 

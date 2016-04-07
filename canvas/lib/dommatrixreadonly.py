@@ -3,6 +3,9 @@
 DOMMatrixReadOnly
 =================
 """
+import numpy as np
+import re
+
 class DOMMatrixReadOnly(object):
     """
     [Constructor(sequence<unrestricted double> numberSequence),
@@ -69,16 +72,9 @@ class DOMMatrixReadOnly(object):
     };
     """
 
-    _matrix = {
-        'm11': 1, 'm12': 0, 'm13': 0, 'm14': 0,
-        'm21': 0, 'm22': 1, 'm23': 0, 'm24': 0,
-        'm31': 0, 'm32': 0, 'm33': 1, 'm34': 0,
-        'm41': 0, 'm42': 0, 'm43': 0, 'm44': 1
-    }
+    #_is2D = False
 
-    _is2D = False
-
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         """
         The DOMMatrixReadOnly(sequence<unrestricted double> numberSequence)
         constructor, when invoked, must run the following steps:
@@ -103,23 +99,20 @@ class DOMMatrixReadOnly(object):
 
         Source: https://www.w3.org/TR/geometry-1/#dommatrixreadonly-constructors
         """
+        object.__setattr__(self, '_matrix', {
+            'm11': 1, 'm12': 0, 'm13': 0, 'm14': 0,
+            'm21': 0, 'm22': 1, 'm23': 0, 'm24': 0,
+            'm31': 0, 'm32': 0, 'm33': 1, 'm34': 0,
+            'm41': 0, 'm42': 0, 'm43': 0, 'm44': 1
+        })
+
         if len(args) is 6:
             self._matrix['m11'] = args[0]
             self._matrix['m12'] = args[1]
-            self._matrix['m13'] = 0
-            self._matrix['m14'] = 0
             self._matrix['m21'] = args[2]
             self._matrix['m22'] = args[3]
-            self._matrix['m23'] = 0
-            self._matrix['m24'] = 0
-            self._matrix['m31'] = 0
-            self._matrix['m32'] = 0
-            self._matrix['m33'] = 1
-            self._matrix['m34'] = 0
             self._matrix['m41'] = args[4]
             self._matrix['m42'] = args[5]
-            self._matrix['m43'] = 0
-            self._matrix['m44'] = 1
 
             # Due to __setattr__ overloading in DOMMatrix
             object.__setattr__(self, '_is2D', True)
@@ -144,6 +137,14 @@ class DOMMatrixReadOnly(object):
 
             # Due to __setattr__ overloading in DOMMatrix
             object.__setattr__(self, '_is2D', False)
+
+        elif kwargs is not None and bool(kwargs):
+            for key, value in kwargs.items():
+                match = re.search(r'^m[1-4][1-4]$', key)
+                if match and key in self._matrix:
+                    self._matrix[key] = value
+                else:
+                    raise TypeError()
 
         else:
             raise TypeError()
@@ -256,8 +257,23 @@ class DOMMatrixReadOnly(object):
 
         return False
 
+    def _np_array(self, other=None):
+        if other is not None:
+            _m = other._matrix
+        else:
+            _m = self._matrix
+
+        return np.array([
+            [ _m['m11'], _m['m12'], _m['m13'], _m['m14'] ],
+            [ _m['m21'], _m['m22'], _m['m23'], _m['m24'] ],
+            [ _m['m31'], _m['m32'], _m['m33'], _m['m34'] ],
+            [ _m['m41'], _m['m42'], _m['m43'], _m['m44'] ]
+        ])
+
     def multiply(self, other):
-        pass
+        from dommatrix import DOMMatrix
+        _m = np.dot(self._np_array(other), self._np_array())
+        return DOMMatrix(*_m.flatten())
 
     def translateSelf(self, tx, ty, tz=0):
         pass
@@ -292,4 +308,17 @@ class DOMMatrixReadOnly(object):
     def setMatrixValue(self, transformList):
         pass
 
-
+    def __str__(self):
+        r = ""
+        r = r + "[ %s, %s, %s, %s ],\n" % (self.m11, self.m12, self.m13, self.m14)
+        r = r + "[ %s, %s, %s, %s ],\n" % (self.m21, self.m22, self.m23, self.m24)
+        r = r + "[ %s, %s, %s, %s ],\n" % (self.m31, self.m32, self.m33, self.m34)
+        r = r + "[ %s, %s, %s, %s ]\n" % (self.m41, self.m42, self.m43, self.m44)
+        r = r + "\n"
+        r = r + "a: %s\n" % self.a
+        r = r + "b: %s\n" % self.b
+        r = r + "c: %s\n" % self.c
+        r = r + "d: %s\n" % self.d
+        r = r + "e: %s\n" % self.e
+        r = r + "f: %s\n" % self.f
+        return r
