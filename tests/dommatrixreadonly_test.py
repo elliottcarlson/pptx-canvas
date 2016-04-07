@@ -5,6 +5,7 @@ from canvas.lib.dommatrixreadonly import DOMMatrixReadOnly
 
 class DOMMatrixReadOnlyTest(unittest.TestCase):
     """Tests for DOMMatrixReadOnly"""
+
     matrix_args_2d = [ 1, 2, 3, 4, 5, 6 ]
     matrix_args_3d = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
     matrix_args_identity = [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ]
@@ -36,6 +37,18 @@ class DOMMatrixReadOnlyTest(unittest.TestCase):
     def test_no_identity(self):
         self.assertFalse(self.matrix_2d.isIdentity)
         self.assertFalse(self.matrix_3d.isIdentity)
+
+    def test_readonly_matrix_properties(self):
+        with self.assertRaises(AttributeError):
+            self.matrix_2d.m11 = None
+
+    def test_readonly_is2d_property(self):
+        with self.assertRaises(AttributeError):
+            self.matrix_2d.is2D = None
+
+    def test_readonly_identity_property(self):
+        with self.assertRaises(AttributeError):
+            self.matrix_2d.isIdentity = None
 
 if __name__ == "__main__" and __package__ is None:
     unittest.main()  # pragma: no cover

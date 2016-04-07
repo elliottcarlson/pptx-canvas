@@ -3,7 +3,7 @@
 DOMMatrixReadOnly
 =================
 """
-class DOMMatrixReadOnly:
+class DOMMatrixReadOnly(object):
     """
     [Constructor(sequence<unrestricted double> numberSequence),
         Exposed=(Window,Worker)]
@@ -121,7 +121,8 @@ class DOMMatrixReadOnly:
             self._matrix['m43'] = 0
             self._matrix['m44'] = 1
 
-            self._is2D = True
+            # Due to __setattr__ overloading in DOMMatrix
+            object.__setattr__(self, '_is2D', True)
 
         elif len(args) is 16:
             self._matrix['m11'] = args[0]
@@ -141,7 +142,9 @@ class DOMMatrixReadOnly:
             self._matrix['m43'] = args[14]
             self._matrix['m44'] = args[15]
 
-            self._is2D = False
+            # Due to __setattr__ overloading in DOMMatrix
+            object.__setattr__(self, '_is2D', False)
+
         else:
             raise TypeError()
 
