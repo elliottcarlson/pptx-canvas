@@ -282,8 +282,7 @@ class DOMMatrixReadOnly(object):
     def scale(self, x, y):
         #from .dommatrix import DOMMatrix
         _other = self.DOMMatrix(x, 0, 0, 0, 0, y, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-        print _other
-
+        print(_other)
         return self.multiply(_other)
 
     def multiply(self, other):
