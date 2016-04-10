@@ -5,7 +5,7 @@ CanvasFillStrokeStyles
 """
 from .gradient import CanvasGradient
 from .pattern import CanvasPattern
-from colour import Color
+from canvas.lib.color import Color
 
 class CanvasFillStrokeStyles(object):
     """
@@ -71,6 +71,8 @@ class CanvasFillStrokeStyles(object):
                 isinstance(val, CanvasPattern) or
                 isinstance(val, Color)):
             self._fillStyle = val
+        else:
+            self._fillStyle = Color(val)
 
     def createLinearGradient(self, x0, y0, x1, y1):
         """

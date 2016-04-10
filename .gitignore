@@ -1,5 +1,6 @@
 venv/
 *.pyc
+samples/*.pptx
 token
 output.pptx
 _shapes_pptx/

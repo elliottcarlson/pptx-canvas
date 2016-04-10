@@ -45,17 +45,21 @@ class CanvasRect(object):
             The rectangle's height.
         """
         shapes = self._canvas._slide._element.find('.//p:spTree', namespaces=self.nsmap)
-        new_shape = Shape()
+        shape = Shape()
 
-        shp = new_shape.prstGeom('rect', x, y, width - x, height - y)
-        shp.spPr.append(new_shape._a.ln(new_shape._a.solidFill(new_shape.color(srgbClr=self.strokeStyle)), w=str(self.lineWidth)))
+        prstGeom = shape.prstGeom('rect', x, y, width - x, height - y)
+        solidFill = shape._a.solidFill(shape.color(srgbClr=self.fillStyle.hex))
+        prstGeom.spPr.append(solidFill)
+
+        # shp.spPr.append(new_shape._a.ln(new_shape._a.solidFill(new_shape.color(srgbClr=self.strokeStyle)), w=str(self.lineWidth)))
+        #shp.spPr.append(new_shape._a.ln(new_shape._a.solidFill(new_shape.color(srgbClr=self.fillStyle.hex)), w=str(self.lineWidth)))
 
 
         #shp.fill.solid()
         #shp.fill.fore_color.rgb = RGBColor.from_string('3C2F80')
 
-        pprint(shp)
-        shapes.append(shp)
+        # pprint(shp)
+        shapes.append(prstGeom)
 
         pass
 
