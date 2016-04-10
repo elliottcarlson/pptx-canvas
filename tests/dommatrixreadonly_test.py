@@ -64,6 +64,19 @@ class DOMMatrixReadOnlyTest(unittest.TestCase):
 
         self.assertEqual(_m3._matrix, _expected)
 
+    def test_translate(self):
+        _m1 = DOMMatrixReadOnly(1, 2, 3, 4, 5, 6)
+        _m2 = _m1.translate(2, 3)
+
+        _expected = {
+            'm11': 1, 'm12': 2, 'm13': 0, 'm14': 0,
+            'm21': 3, 'm22': 4, 'm23': 0, 'm24': 0,
+            'm31': 0, 'm32': 0, 'm33': 1, 'm34': 0,
+            'm41': 16, 'm42': 22, 'm43': 0, 'm44': 1
+        }
+
+        self.assertEqual(_m2._matrix, _expected)
+
 if __name__ == "__main__" and __package__ is None:
     unittest.main()  # pragma: no cover
 

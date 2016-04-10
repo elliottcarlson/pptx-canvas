@@ -99,6 +99,9 @@ class DOMMatrixReadOnly(object):
 
         Source: https://www.w3.org/TR/geometry-1/#dommatrixreadonly-constructors
         """
+        from .dommatrix import DOMMatrix
+        object.__setattr__(self, 'DOMMatrix', DOMMatrix)
+
         object.__setattr__(self, '_matrix', {
             'm11': 1, 'm12': 0, 'm13': 0, 'm14': 0,
             'm21': 0, 'm22': 1, 'm23': 0, 'm24': 0,
@@ -270,21 +273,47 @@ class DOMMatrixReadOnly(object):
             [ _m['m41'], _m['m42'], _m['m43'], _m['m44'] ]
         ])
 
+    def translate(self, x, y):
+        #from .dommatrix import DOMMatrix
+        _other = self.DOMMatrix(1, 0, 0, 1, x, y)
+
+        return self.multiply(_other)
+
+    def scale(self, x, y):
+        #from .dommatrix import DOMMatrix
+        _other = self.DOMMatrix(x, 0, 0, 0, 0, y, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+        print _other
+
+        return self.multiply(_other)
+
     def multiply(self, other):
-        from .dommatrix import DOMMatrix
+        #from .dommatrix import DOMMatrix
         _m = np.dot(self._np_array(other), self._np_array())
-        return DOMMatrix(*_m.flatten())
+        return self.DOMMatrix(*_m.flatten())
 
     def translateSelf(self, tx, ty, tz=0):
-        pass
-
-    def scale(self, scale, ox=0, oy=0):
         pass
 
     def scale3d(self, scale, ox=0, oy=0, oz=0):
         pass
 
     def scaleNonUniform(self, sx, sy=1, sz=1, ox=0, oy=0, oz=0):
+        #from .dommatrix import DOMMatrix
+        if sx == 1.0 and sy == 1.0 and sz == 1.0:
+            return self
+
+        _other = self.DOMMatrix(**self._matrix)
+        _other.translate(ox, oy) #, oz)
+
+        if not self.is2D or sz != 1.0 or oz != 0:
+            ## TODO Ensure3DMatrix
+            _m2 = self.DOMMatrix(sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, 0, 0, 0, 0)
+        else:
+            _m2 = self.DOMMatrix(sx, 0, 0, 0, sy, 0)
+
+        _out = _m2.multiply(_other)
+        _out2 = _out.translate(-ox, -oy) # , -oz)
+        return _out2
         pass
 
     def rotateSelf(self, angle, originX=0, originY=0):
