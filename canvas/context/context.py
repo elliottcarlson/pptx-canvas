@@ -28,6 +28,7 @@ class CanvasRenderingContext2D(CanvasState, CanvasTransform, CanvasCompositing,
         CanvasImageSmoothing, CanvasFillStrokeStyles, CanvasShadowStyles,
         CanvasRect, CanvasDrawPath, CanvasUserInterface, CanvasText,
         CanvasDrawImage, CanvasHitRegion, CanvasImageData):
+
     ## OpenXML NameSpace map
     nsmap = {
         'p': 'http://schemas.openxmlformats.org/presentationml/2006/main',

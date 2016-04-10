@@ -51,6 +51,8 @@ class CanvasFillStrokeStyles(object):
                 isinstance(val, CanvasPattern) or
                 isinstance(val, Color)):
             self._strokeStyle = val
+        else:
+            self._strokeStyle=  Color(val)
 
     @property
     def fillStyle(self):

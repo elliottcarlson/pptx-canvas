@@ -2,7 +2,7 @@ from pptx import Presentation
 from pptx.util import Length, Pt
 from os import sys, path
 
-def draw_red_rectangle():
+def draw_green_line():
 
     print('Creating a blank presentation.')
     prs = Presentation()
@@ -13,15 +13,18 @@ def draw_red_rectangle():
     canvas = Canvas(slide, prs.slide_height, prs.slide_width)
     ctx = canvas.getContext('2d')
 
-    print('Drawing a 150pt by 75pt red rectangle at 10pt,10pt coordinates.')
-    ctx.fillStyle = '#FF0000'
-    ctx.fillRect(Pt(10), Pt(10), Pt(150), Pt(75))
+    print('Drawing a green line from 10pt,10pt to 100pt,100pt coordinates.')
+    ctx.strokeStyle = '#00FF00'
 
-    print('Saving to `red_rectangle.pptx`')
-    prs.save('red_rectangle.pptx')
+    ctx.moveTo(Pt(10), Pt(10))
+    ctx.lineTo(Pt(100), Pt(100))
+    ctx.stroke()
+
+    print('Saving to `green_line.pptx`')
+    prs.save('green_line.pptx')
 
 if __name__ == '__main__':
     sys.path.append(path.abspath(path.join(path.dirname(__file__), '..')))
     from canvas import Canvas
 
-    draw_red_rectangle()
+    draw_green_line()

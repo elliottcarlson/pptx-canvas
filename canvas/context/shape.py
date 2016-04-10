@@ -64,6 +64,25 @@ class Shape(object):
         '</p:sp>'
       )
 
+      self._cxnSp = '<p:cxnSp ' + self.xmlns('p', 'a') + ('>'
+        '  <p:nvCxnSpPr>'
+        '    <p.cNvPr id="%s" name="%s"/>'
+        '    <p:cNvCxnSpPr/>'
+        '    <p:nvPr/>'
+        '  </p:nvCxnSpPr>'
+        '  <p:spPr>'
+        '    <a:xfrm>'
+        '      <a:off x="%s" y="%s"/>'
+        '      <a:ext cx="%s" cy="%s"/>'
+        '    </a:xfrm>'
+        '    <a:prstGeom prst="straightConnector1">'
+        '      <a:avLst/>'
+        '    </a:prstGeom>'
+        '    <a:noFill/>'
+        '  </p:spPr>'
+        '</p:cxnSp>'
+    )
+
     def xmlns(self, *prefixes):
         return ' '.join('xmlns:%s="%s"' % (p, self._nsmap[p]) for p in prefixes)
 

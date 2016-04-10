@@ -2,7 +2,11 @@
 ==========
 CanvasPath
 ==========
+
+See `CanvasDrawPath` in drawpath.py
 """
+from collections import OrderedDict
+
 class CanvasPath(object):
     """
     [NoInterfaceObject, Exposed=(Window,Worker)]
@@ -42,34 +46,53 @@ class CanvasPath(object):
         Marks the current subpath as closed, and starts a new subpath with a
         point the same as the start and end of the newly closed subpath.
         """
+        self._paths.append(OrderedDict())
         pass
 
     def moveTo(self, x, y):
         """
         Creates a new subpath with the given point.
         """
-        pass
+        self._paths[-1]['moveTo'] = {
+            'x': x,
+            'y': y
+        }
 
     def lineTo(self, x, y):
         """
         Adds the given point to the current subpath, connected to the previous
         one by a straight line.
         """
-        pass
+        self._paths[-1]['lnTo'] = {
+            'x': x,
+            'y': y
+        }
 
     def quadraticCurveTo(self, cpx, cpy, x, y):
         """
         Adds the given point to the current subpath, connected to the previous
         one by a quadratic Bezier curve with the given control point.
         """
-        pass
+        self._paths[-1]['quadBzTo'] = {
+            'cpx': cpx,
+            'cpy': cpy,
+            'x': x,
+            'y': y
+        }
 
     def bezierCurveTo(self, cp1x, cp1y, cp2x, cp2y, x, y):
         """
         Adds the given point to the current subpath, connected to the previous
         one by a cubic Bezier curve with the given control points.
         """
-        pass
+        self._paths[-1]['cubicBezTo'] = {
+            'cp1x': cp1x,
+            'cp1y': cp1y,
+            'cp2x': cp2x,
+            'cp2y': cp2y,
+            'x': x,
+            'y': y
+        }
 
     def arcTo(self, x1, y1, x2, y2, radius, radius2=None, rotation=None):
         """
@@ -88,6 +111,7 @@ class CanvasPath(object):
         https://html.spec.whatwg.org/images/arcTo2.png
         https://html.spec.whatwg.org/images/arcTo3.png
         """
+        # TODO
         pass
 
     def arc(self, x, y, startAngle, endAngle, anticlockwise=False):

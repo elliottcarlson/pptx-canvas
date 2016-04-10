@@ -51,17 +51,7 @@ class CanvasRect(object):
         solidFill = shape._a.solidFill(shape.color(srgbClr=self.fillStyle.hex))
         prstGeom.spPr.append(solidFill)
 
-        # shp.spPr.append(new_shape._a.ln(new_shape._a.solidFill(new_shape.color(srgbClr=self.strokeStyle)), w=str(self.lineWidth)))
-        #shp.spPr.append(new_shape._a.ln(new_shape._a.solidFill(new_shape.color(srgbClr=self.fillStyle.hex)), w=str(self.lineWidth)))
-
-
-        #shp.fill.solid()
-        #shp.fill.fore_color.rgb = RGBColor.from_string('3C2F80')
-
-        # pprint(shp)
         shapes.append(prstGeom)
-
-        pass
 
     def strokeRect(self, x, y, width, height):
         pass
