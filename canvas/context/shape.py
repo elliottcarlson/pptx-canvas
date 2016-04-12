@@ -81,7 +81,46 @@ class Shape(object):
         '    <a:noFill/>'
         '  </p:spPr>'
         '</p:cxnSp>'
-    )
+      )
+
+      self._txBody = '<p:sp ' + self.xmlns('p', 'a') + ('>'
+        '  <p:nvSpPr>'
+        '    <p:cNvPr id="%s" name="%s"/>'
+        '    <p:cNvSpPr txBox="1"/>'
+        '    <p:nvPr/>'
+        '  </p:nvSpPr>'
+        '  <p:spPr>'
+        '    <a:xfrm>'
+        '      <a:off x="%s" y="%s"/>'
+        '      <a:ext cx="%s" cy="%s"/>'
+        '    </a:xfrm>'
+        '    <a:prstGeom prst="rect">'
+        '      <a:avLst/>'
+        '    </a:prstGeom>'
+        '    <a:noFill/>'
+        '    <a:ln>'
+        '      <a:noFill/>'
+        '    </a:ln>'
+        '  </p:spPr>'
+        '  <p:txBody>'
+        '    <a:bodyPr wrap="none">'
+        '      <a:spAutoFit/>'
+        '    </a:bodyPr>'
+        '    <a:lstStyle/>'
+        '    <a:p>'
+        '      <a:pPr>'
+        '        <a:spcBef>'
+        '          <a:spcPts val="0"/>'
+        '        </a:spcBef>'
+        '        <a:buNone/>'
+        '      </a:pPr>'
+        '      <a:r>'
+        '        <a:t>%s</a:t>'
+        '      </a:r>'
+        '    </a:p>'
+        '  </p:txBody>'
+        '</p:sp>'
+      )
 
     def xmlns(self, *prefixes):
         return ' '.join('xmlns:%s="%s"' % (p, self._nsmap[p]) for p in prefixes)
@@ -103,8 +142,14 @@ class Shape(object):
 
     def custGeom(self, x, y, w, h):
         id = self._globals['shape'] = self._globals['shape'] + 1
-        shp = objectify.fromstring(self._custGeom % (id, 'Freeform %d' %id, x, y, w, h))
+        shp = objectify.fromstring(self._custGeom % (id, 'Freeform %d' % id, x, y, w, h))
         return shp
+
+    def text(self, text, x, y, w, h):
+        id = self._globals['shape'] = self._globals['shape'] + 1
+        shp = objectify.fromstring(self._txBody % (id, 'Shape %d' % id, x, y, w, h, text))
+        return shp
+
 
     def color(self, schemeClr=None, srgbClr=None, prstClr=None, hslClr=None, sysClr=None, scrgbClr=None, **mod):
         """

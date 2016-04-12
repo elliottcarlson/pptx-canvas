@@ -74,13 +74,26 @@ class Radar(object):
 
             angle = atan2(vertices[i][1] - y, vertices[i][0] - x) * 180 / pi + 180;
 
-            self.drawStub(vertices[i][0], vertices[i][1], angle)
+            max_val = int(ceil(max(self.data)))
+            if i is 0:
+                formatter = '{0} = {0}x the average'
+            else:
+                formatter = '{0}'
 
-            midway = self.getPoint(x, y, vertices[i][0], vertices[i][1], 50)
-            self.drawStub(midway['x'], midway['y'], angle)
+            self.drawStub(formatter.format(max_val), vertices[i][0], vertices[i][1], angle)
 
-    def getPoint(self, x1, y1, x2, y2, percent):
-        angle = atan2(y2 - y1, x2 - x1) * 180 / pi + 180;
+            for j in range(max_val):
+                if j is 0:
+                  continue
+
+                midway = self.getPoint(x, y, vertices[i][0], vertices[i][1], angle, (100 / max_val) * j)
+                if i is 0 and j is 1:
+                    text = '{0} = average score'
+                else:
+                    text = '{0}'
+                self.drawStub(text.format(j), midway['x'], midway['y'], angle)
+
+    def getPoint(self, x1, y1, x2, y2, angle, percent):
         distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2))
 
         return {
@@ -88,18 +101,18 @@ class Radar(object):
             'y': y1 - self.sin(angle) * (distance * (percent / 100.0))
         }
 
-    def drawStub(self, x, y, angle):
+    def drawStub(self, text, x, y, angle):
         stub_x1 = x + (5 * self.cos(angle + 90))
         stub_y1 = y + (5 * self.sin(angle + 90))
         stub_x2 = x - (5 * self.cos(angle + 90))
         stub_y2 = y - (5 * self.sin(angle + 90))
 
         if self.quadrant(stub_x1, stub_y1, stub_x2, stub_y2) >= 3:
-            text_x = x + (25 * self.cos(angle + 90))
-            text_y = y + (25 * self.sin(angle + 90)) + 5
+            text_x = x + (10 * self.cos(angle + 90))
+            text_y = y + (15 * self.sin(angle + 90))
         else:
-            text_x = x - (25 * self.cos(angle + 90))
-            text_y = y - (25 * self.sin(angle + 90)) + 5
+            text_x = x - (10 * self.cos(angle + 90))
+            text_y = y - (15 * self.sin(angle + 90))
 
         self.ctx.beginPath()
         self.ctx.moveTo(Pt(stub_x1), Pt(stub_y1))
@@ -109,23 +122,41 @@ class Radar(object):
         self.ctx.stroke()
         self.ctx.closePath()
 
+        self.ctx.strokeText(text, Pt(text_x), Pt(text_y))
+
     def drawData(self, x, y):
         vertices = self.getVertices(x, y)
 
         for i in range(len(self.data)):
             next = i + 1 if i + 1 != len(self.data) else 0
 
-            start_point = self.getPoint(x, y, vertices[i][0], vertices[i][1], self.data[i] * 100 / ceil(max(self.data)))
-            next_point = self.getPoint(x, y, vertices[next][0], vertices[next][1], self.data[next] * 100 / ceil(max(self.data)))
+            angle = atan2(vertices[i][1] - y, vertices[i][0] - x) * 180 / pi + 180;
+            start_point = self.getPoint(x, y, vertices[i][0], vertices[i][1], angle, self.data[i] * 100 / ceil(max(self.data)))
+
+            angle = atan2(vertices[next][1] - y, vertices[next][0] - x) * 180 / pi + 180;
+            next_point = self.getPoint(x, y, vertices[next][0], vertices[next][1], angle, self.data[next] * 100 / ceil(max(self.data)))
+
+
 
             self.ctx.beginPath()
             self.ctx.moveTo(Pt(start_point['x']), Pt(start_point['y']))
             self.ctx.lineTo(Pt(next_point['x']), Pt(next_point['y']))
 
             self.ctx.strokeStyle = '#47a2f8'
-            self.ctx.lineWidth = Pt(2)
+            self.ctx.lineWidth = Pt(4)
             self.ctx.stroke()
             self.ctx.closePath()
+
+            print("%s: %s" % (self.data[i], self.quadrant(x, y, vertices[i][0], vertices[i][1])))
+
+            quadrant = self.quadrant(x, y, vertices[i][0], vertices[i][1])
+            if quadrant is 1 or quadrant is 4:
+                text_x = start_point['x'] + 15
+                text_y = start_point['y'] - 15
+            else:
+                text_x = start_point['x'] - 30
+                text_y = start_point['y'] - 15
+            self.ctx.strokeText(self.data[i], Pt(text_x), Pt(text_y))
 
 def draw_radar():
 
@@ -139,7 +170,7 @@ def draw_radar():
     ctx = canvas.getContext('2d')
 
     print('Creating Radar class instance.')
-    radar = Radar(ctx, [ 0.7, 1.7, 1.5 ])
+    radar = Radar(ctx, [ 2.7, 1.7, 2.5, 1.6, 0.6, 2.0, 1.8 ])
 
     print('Drawing Radar.')
     radar.draw(250, 250)

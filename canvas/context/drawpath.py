@@ -111,8 +111,6 @@ class CanvasDrawPath(CanvasPath):
             )
         )
 
-        ln = shape._a.ln(shape._a.solidFill(shape._a.srgbClr(val=self.strokeStyle.hex)), cap="flat", cmpd="sng", w=str(self.lineWidth))
-
     def clip(self, path=None, fillRule='nonzero'):
         """
         Further constrains the clipping region to the current default path or

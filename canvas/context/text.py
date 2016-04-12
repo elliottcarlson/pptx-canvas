@@ -3,6 +3,8 @@
 CanvasText
 ==========
 """
+from .shape import Shape
+
 class CanvasText(object):
     """
     [NoInterfaceObject]
@@ -33,6 +35,11 @@ class CanvasText(object):
         Strokes the given text at the given position. If a maximum width is
         provided, the text will be scaled to fit that width if necessary.
         """
+        shapes = self._canvas._slide._element.find('.//p:spTree', namespaces=self.nsmap)
+        shape = Shape()
+
+        txBody = shape.text(text, x, y, 1000, 1000) #self._canvas._slide_width, self._canvas._slide_height)
+        shapes.append(txBody)
         pass
 
     def measureText(self, text):
