@@ -71,28 +71,24 @@ class CanvasDrawPath(CanvasPath):
         custGeom = shape.custGeom(0, 0, self._canvas._slide_width, self._canvas._slide_height)
         pathList = shape._a.pathLst()
 
-        for paths in self._paths:
+        path = shape._a.path()
+        for command, attr in self._paths[-1].items():
 
-            path = shape._a.path()
+            if command is 'moveTo':
+                action = shape._a.moveTo()
+            elif command is 'lnTo':
+                action = shape._a.lnTo()
+            else:
+                pass
 
-            for command, attr in paths.items():
+            pt = shape._a.pt(**dict([a, str(x)] for a, x in attr.items()))
+            action.append(pt)
+            path.append(action)
 
-                if command is 'moveTo':
-                    action = shape._a.moveTo()
-                elif command is 'lnTo':
-                    action = shape._a.lnTo()
-                else:
-                    pass
-
-                pt = shape._a.pt(**dict([a, str(x)] for a, x in attr.items()))
-                action.append(pt)
-                path.append(action)
-
-            pathList.append(path)
+        pathList.append(path)
 
         custGeom = shape._a.custGeom(pathList)
 
-        #custGeom.spPr.custGeom.append(pathList)
         shapes.append(
             shape._p.sp(
                 shape._p.nvSpPr(
@@ -115,31 +111,7 @@ class CanvasDrawPath(CanvasPath):
             )
         )
 
-        #        custGeom)
-
-
-
-
         ln = shape._a.ln(shape._a.solidFill(shape._a.srgbClr(val=self.strokeStyle.hex)), cap="flat", cmpd="sng", w=str(self.lineWidth))
-        #custGeom.spPr.append(ln)
-
-
-            #test.append(pathList)
-
-
-        #prstGeom = shape.prstGeom('rect', x, y, width - x, height - y)
-        #solidFill = shape._a.solidFill(shape.color(srgbClr=self.fillStyle.hex))
-        #prstGeom.spPr.append(solidFill)
-
-        #shapes.append(prstGeom)
-
-
-
-        #[OrderedDict([('moveTo', {'y': 127000, 'x': 127000}), ('lnTo', {'y': 1270000, 'x': 1270000})])]
-
-
-
-        pass
 
     def clip(self, path=None, fillRule='nonzero'):
         """
