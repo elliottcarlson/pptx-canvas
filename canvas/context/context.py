@@ -13,6 +13,7 @@ from .rect import CanvasRect
 from .drawpath import CanvasDrawPath
 from .userinterface import CanvasUserInterface
 from .text import CanvasText
+from .textdrawingstyles import CanvasTextDrawingStyles
 from .drawimage import CanvasDrawImage
 from .hitregion import CanvasHitRegion
 from .imagedata import CanvasImageData
@@ -27,7 +28,8 @@ from lxml.builder import ElementMaker
 class CanvasRenderingContext2D(CanvasState, CanvasTransform, CanvasCompositing,
         CanvasImageSmoothing, CanvasFillStrokeStyles, CanvasShadowStyles,
         CanvasRect, CanvasDrawPath, CanvasUserInterface, CanvasText,
-        CanvasDrawImage, CanvasHitRegion, CanvasImageData):
+        CanvasTextDrawingStyles, CanvasDrawImage, CanvasHitRegion,
+        CanvasImageData):
 
     ## OpenXML NameSpace map
     nsmap = {

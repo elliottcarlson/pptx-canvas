@@ -36,8 +36,20 @@ class CSSFontParse(object):
             self._fontVariant = match.group(2) or self._fontVariant
             self._fontWeight = match.group(3) or self._fontWeight
             self._fontSize = match.group(4) or self._fontSize
-            self._lineHeight = match.group(5) or self._lineHeight
             self._fontFamily = match.group(6) or self._fontFamily
+
+    def __str__(self):
+        components = []
+        properties = [
+            '_fontStyle', '_fontVariant', '_fontWeight',
+            '_fontSize', '_fontFamily'
+        ]
+
+        for prop in properties:
+            if getattr(self, prop) is not 'normal':
+                components.append(getattr(self, prop))
+
+        return ' '.join(components)
 
     @property
     def fontStyle(self):
