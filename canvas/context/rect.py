@@ -47,7 +47,7 @@ class CanvasRect(object):
         shapes = self._canvas._slide._element.find('.//p:spTree', namespaces=self.nsmap)
         shape = Shape()
 
-        prstGeom = shape.prstGeom('rect', x, y, width - x, height - y)
+        prstGeom = shape.prstGeom('rect', x, y, width, height)
         solidFill = shape._a.solidFill(shape.color(srgbClr=self.fillStyle.hex))
         prstGeom.spPr.append(solidFill)
 

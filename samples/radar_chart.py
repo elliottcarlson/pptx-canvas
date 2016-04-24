@@ -3,17 +3,6 @@ from pptx.util import Length, Pt
 from os import sys, path
 from math import atan2, ceil, cos, pi, pow, sin, sqrt
 
-DATA = [{
-    'name': 'test',
-    'color': 'blue',
-    'data': [
-        0.7,
-        1.7,
-        1.5,
-        2.3
-    ]
-}]
-
 class Radar(object):
 
     def __init__(self, ctx, data, scale=0.8):
@@ -147,8 +136,6 @@ class Radar(object):
             self.ctx.stroke()
             self.ctx.closePath()
 
-            print("%s: %s" % (self.data[i], self.quadrant(x, y, vertices[i][0], vertices[i][1])))
-
             quadrant = self.quadrant(x, y, vertices[i][0], vertices[i][1])
             if quadrant is 1 or quadrant is 4:
                 text_x = start_point['x'] + 15
@@ -172,11 +159,11 @@ def draw_radar():
     print('Creating Radar class instance.')
     radar = Radar(ctx, [ 2.7, 1.7, 2.5, 1.6, 0.6, 2.0, 1.8 ])
 
-    print('Drawing Radar.')
+    print('Drawing Radar Chart.')
     radar.draw(250, 250)
 
-    print('Saving to `radar.pptx`')
-    prs.save('radar.pptx')
+    print('Saving to `radar_chart.pptx`')
+    prs.save('radar_chart.pptx')
 
 if __name__ == '__main__':
     sys.path.append(path.abspath(path.join(path.dirname(__file__), '..')))
