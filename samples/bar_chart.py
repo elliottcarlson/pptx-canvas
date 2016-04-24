@@ -38,6 +38,7 @@ class BarChart(object):
 
     def drawGrid(self, x, y):
         self.ctx.strokeStyle = '#e3e3e3'
+        self.ctx.font = '8pt Georgia'
 
         j = self.paddingTop
         for i in arange(self.max_range, -0.5, -0.5):
@@ -51,13 +52,14 @@ class BarChart(object):
             self.ctx.closePath()
 
             self.ctx.save()
-            self.ctx.font = 'italix 8Pt Arial'
+            self.ctx.font = 'italic 8pt Georgia'
             if (i).is_integer():
                 self.ctx.strokeText('%d = average score' % i,
                     Pt(self.chartWidth(x) + 5), Pt(j+3-10))
             self.ctx.restore()
             self.ctx.closePath()
             j = j + self.gridHeight(y)
+            self.ctx.font = '8pt Georgia'
 
     def barWidth(self, x):
         return (self.chartWidth(x) - self.paddingLeft) / len(self.data)
