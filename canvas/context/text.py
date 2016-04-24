@@ -69,7 +69,8 @@ class CanvasText(object):
                         shape._a.ext(cx="914250", cy="914250")
                     ),
                     shape._a.prstGeom(
-                        shape._a.avLst()
+                        shape._a.avLst(),
+                        prst="rect"
                     ),
                     shape._a.noFill(),
                     shape._a.ln(
@@ -78,7 +79,7 @@ class CanvasText(object):
                 ),
                 shape._p.txBody(
                     shape._a.bodyPr(
-                        shape._a.noAutoFit(),
+                        shape._a.noAutofit(),
                         anchorCtr="0", anchor="t", bIns="91425", lIns="91425",
                         rIns="91425", tIns="91425"
                     ),
