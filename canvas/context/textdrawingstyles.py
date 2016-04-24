@@ -42,28 +42,55 @@ class CanvasTextDrawingStyles(object):
         """
         self._font = CSSFontParse(val)
 
-    def fillText(self, text, x, y, maxWidth=None):
+    @property
+    def textAlign(self):
         """
-        Fills the given text at the given position. If a maximum width is
-        provided, the text will be scaled to fit that width if necessary.
+        Returns the current value of the textAlign IDL attribute. The default
+        value is "start".
         """
-        pass
+        return self._textAlign
 
-    def strokeText(self, text, x, y, maxWidth=None):
+    @textAlign.setter
+    def textAlign(self, val):
         """
-        Strokes the given text at the given position. If a maximum width is
-        provided, the text will be scaled to fit that width if necessary.
+        Sets the textAlign IDL attribute when the value is one of "start",
+        "end", "left", "right", or "center". Other values are ignored.
         """
-        shapes = self._canvas._slide._element.find('.//p:spTree', namespaces=self.nsmap)
-        shape = Shape()
+        if val in ['start', 'end', 'left', 'right', 'center']:
+            self._textAlign = val
 
-        txBody = shape.text(text, x, y, 1000, 1000) #self._canvas._slide_width, self._canvas._slide_height)
-        shapes.append(txBody)
-        pass
+    @property
+    def textBaseline(self):
+        """
+        Returns the current value of the textBaseline IDL attribute. The default
+        value is "alphabetic".
+        """
+        return self._textBaseline
 
-    def measureText(self, text):
+    @textBaseline.setter
+    def textBaseline(self, val):
         """
-        Returns a TextMetrics object with the metrics of the given text in the
-        current font.
+        Sets the textBaseline IDL attribute when the value is one of "top",
+        "hanging", "middle", "alphabetic", "ideographic", or "bottom". Other
+        values are ignored.
         """
-        pass
+        if val in ['top', 'hanging', 'middle', 'alphabetic', 'ideographic',
+            'bottom']:
+            self._textBaseline = val
+
+    @property
+    def direction(self):
+        """
+        Returns the current value of the direction IDL attribute. The default
+        value is "inherit".
+        """
+        return self._direction
+
+    @direction.setter
+    def direction(self, val):
+        """
+        Sets the direction IDL attribute when the value is one of "ltr", "rtl",
+        or "inherit". Other values are ignored.
+        """
+        if val in ['ltr', 'rtl', 'inherit']:
+            self._direction = val

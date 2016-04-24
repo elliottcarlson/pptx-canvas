@@ -40,8 +40,8 @@ class BarChart(object):
         self.ctx.strokeStyle = '#e3e3e3'
 
         j = self.paddingTop
-        for i in arange(self.max_range, 0, -0.5):
-            self.ctx.strokeText(i, Pt(8), Pt(j+3))
+        for i in arange(self.max_range, -0.5, -0.5):
+            self.ctx.strokeText(i, Pt(5), Pt(j+3-10))
             self.ctx.beginPath()
             self.ctx.moveTo(Pt(self.paddingLeft), Pt(j))
             self.ctx.lineTo(Pt(self.chartWidth(x)), Pt(j))
@@ -54,7 +54,7 @@ class BarChart(object):
             self.ctx.font = 'italix 8Pt Arial'
             if (i).is_integer():
                 self.ctx.strokeText('%d = average score' % i,
-                    Pt(self.chartWidth(x) + 10), Pt(j+3))
+                    Pt(self.chartWidth(x) + 5), Pt(j+3-10))
             self.ctx.restore()
             self.ctx.closePath()
             j = j + self.gridHeight(y)
@@ -78,9 +78,6 @@ class BarChart(object):
         coords['bar_x2'] = self.barWidth(x) * 0.6
         coords['bar_y2'] = self.chartHeight(y) - chartHeight + self.paddingTop
 
-        from pprint import pprint
-        pprint(coords)
-
         return coords
 
     def drawBars(self, x, y):
@@ -100,11 +97,11 @@ class BarChart(object):
                 text_y = coords['box_y2']
                 self.ctx.fillStyle = '#999'
 
-            self.ctx.strokeText(value, Pt(coords['mid_x']), Pt(text_y))
+            self.ctx.strokeText(value, Pt(coords['mid_x'] - 10), Pt(text_y - 10))
 
             self.ctx.fillStyle = '#999'
-            self.ctx.strokeText(key, Pt(coords['mid_x']), Pt(coords['box_y2'] +
-                25))
+            self.ctx.strokeText(key, Pt(coords['mid_x'] - 10), Pt(coords['box_y2'] +
+                15))
 #            self.wraptext(key, coords['mid_x'], coords['box_y2'] + 25,
 #                    self.barWidth(x), 15)
             i = i + 1
