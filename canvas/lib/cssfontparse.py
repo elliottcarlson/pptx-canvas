@@ -25,7 +25,7 @@ class CSSFontParse(object):
     _fontStyle = 'normal'
     _fontVariant = 'normal'
     _fontWeight = 'normal'
-    _fontSize = '10px'
+    _fontSize = 10
     _lineHeight = 'normal'
     _fontFamily = 'sans-serif'
 
@@ -35,7 +35,8 @@ class CSSFontParse(object):
             self._fontStyle = match.group(1) or self._fontStyle
             self._fontVariant = match.group(2) or self._fontVariant
             self._fontWeight = match.group(3) or self._fontWeight
-            self._fontSize = match.group(4) or self._fontSize
+            self._fontSize = str(re.search(r'\d+', match.group(4)).group()) or\
+                self._fontSize
             self._fontFamily = match.group(6) or self._fontFamily
 
     def __str__(self):

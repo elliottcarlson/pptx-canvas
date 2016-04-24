@@ -35,12 +35,85 @@ class CanvasText(object):
         Strokes the given text at the given position. If a maximum width is
         provided, the text will be scaled to fit that width if necessary.
         """
+        align = {
+            'center': 'ctr',
+            'start': 'l',
+            'end': 'r',
+            'left': 'l',
+            'right': 'r'
+        }
+
+        bold = {
+            "normal": "0",
+            "bold": "1"
+        }
+
+        italic = {
+            "normal": "0",
+            "italic": "1"
+        }
+
         shapes = self._canvas._slide._element.find('.//p:spTree', namespaces=self.nsmap)
         shape = Shape()
 
-        txBody = shape.text(text, x, y, 1000, 1000) #self._canvas._slide_width, self._canvas._slide_height)
-        shapes.append(txBody)
-        pass
+        shapes.append(
+            shape._p.sp(
+                shape._p.nvSpPr(
+                    shape._p.cNvPr(id='1', name='Text 1'),
+                    shape._p.cNvSpPr(txBox='1'),
+                    shape._p.nvPr()
+                ),
+                shape._p.spPr(
+                    shape._a.xfrm(
+                        shape._a.off(x=str(x), y=str(y)),
+                        shape._a.ext(cx="914250", cy="914250")
+                    ),
+                    shape._a.prstGeom(
+                        shape._a.avLst()
+                    ),
+                    shape._a.noFill(),
+                    shape._a.ln(
+                        shape._a.noFill()
+                    )
+                ),
+                shape._p.txBody(
+                    shape._a.bodyPr(
+                        shape._a.noAutoFit(),
+                        anchorCtr="0", anchor="t", bIns="91425", lIns="91425",
+                        rIns="91425", tIns="91425"
+                    ),
+                    shape._a.lstStyle(),
+                    shape._a.p(
+                        shape._a.pPr(
+                            shape._a.spcBef(
+                                shape._a.spcPts(val="0")
+                            ),
+                            lvl="0", algn=align[self.textAlign]
+                        ),
+                        shape._a.r(
+                            shape._a.rPr(
+                                shape._a.solidFill(
+                                    shape._a.srgbClr(
+                                        val=self.fillStyle.hex
+                                    )
+                                ),
+                                shape._a.latin(typeface=self._font.fontFamily),
+                                shape._a.ea(typeface=self._font.fontFamily),
+                                shape._a.cs(typeface=self._font.fontFamily),
+                                shape._a.sym(typeface=self._font.fontFamily),
+                                sz=str((int(self._font.fontSize) * 100)),
+                                b=bold[self._font.fontWeight], lang="en",
+                                i=italic[self._font.fontStyle]),
+                            shape._a.t(str(text))
+                        )
+                    )
+                )
+            )
+        )
+
+        #txBody = shape.text(text, x, y, 1000, 1000) #self._canvas._slide_width, self._canvas._slide_height)
+        #shapes.append(txBody)
+        #pass
 
     def measureText(self, text):
         """

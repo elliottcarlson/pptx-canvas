@@ -11,7 +11,7 @@ class CSSFontParseTest(unittest.TestCase):
         self.assertEqual(f.fontStyle, 'normal')
         self.assertEqual(f.fontVariant, 'normal')
         self.assertEqual(f.fontWeight, 'normal')
-        self.assertEqual(f.fontSize, '10px')
+        self.assertEqual(str(f.fontSize), "10")
         self.assertEqual(f.lineHeight, 'normal')
         self.assertEqual(f.fontFamily, 'sans-serif')
 
@@ -20,7 +20,7 @@ class CSSFontParseTest(unittest.TestCase):
         self.assertEqual(f.fontStyle, 'italic')
         self.assertEqual(f.fontVariant, 'normal')
         self.assertEqual(f.fontWeight, 'normal')
-        self.assertEqual(f.fontSize, '10pt')
+        self.assertEqual(str(f.fontSize), "10")
         self.assertEqual(f.lineHeight, 'normal')
         self.assertEqual(f.fontFamily, 'Courier')
 
@@ -29,7 +29,7 @@ class CSSFontParseTest(unittest.TestCase):
         self.assertEqual(f.fontStyle, 'italic')
         self.assertEqual(f.fontVariant, 'small-caps')
         self.assertEqual(f.fontWeight, 'bold')
-        self.assertEqual(f.fontSize, '1em')
+        self.assertEqual(str(f.fontSize), "1")
         self.assertEqual(f.lineHeight, 'normal')
         self.assertEqual(f.fontFamily, 'verdana,sans-serif')
 
@@ -38,7 +38,7 @@ class CSSFontParseTest(unittest.TestCase):
         self.assertEqual(f.fontStyle, 'italic')
         self.assertEqual(f.fontVariant, 'small-caps')
         self.assertEqual(f.fontWeight, '800')
-        self.assertEqual(f.fontSize, '1em')
+        self.assertEqual(str(f.fontSize), "1")
         self.assertEqual(f.lineHeight, 'normal')
         self.assertEqual(f.fontFamily, 'verdana,sans-serif')
 
@@ -47,13 +47,13 @@ class CSSFontParseTest(unittest.TestCase):
         self.assertEqual(f.fontStyle, 'normal')
         self.assertEqual(f.fontVariant, 'normal')
         self.assertEqual(f.fontWeight, 'normal')
-        self.assertEqual(f.fontSize, '10px')
+        self.assertEqual(str(f.fontSize), "10")
         self.assertEqual(f.lineHeight, 'normal')
         self.assertEqual(f.fontFamily, 'sans-serif')
 
     def test_case_6(self):
         f = CSSFontParse('bold italic small-caps 1em/1.5em verdana,sans-serif')
-        self.assertEqual(str(f), 'italic small-caps bold 1em verdana,sans-serif')
+        self.assertEqual(str(f), 'italic small-caps bold 1 verdana,sans-serif')
 
 if __name__ == "__main__" and __package__ is None:
     unittest.main()  # pragma: no cover

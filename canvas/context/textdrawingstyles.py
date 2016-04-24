@@ -17,7 +17,7 @@ class CanvasTextDrawingStyles(object):
     };
     """
 
-    _font = None
+    _font = CSSFontParse('10pt sans-serif')
     _textAlign = 'start'
     _textBaseline = 'alphabetic'
     _direction = 'inherit'
@@ -26,14 +26,16 @@ class CanvasTextDrawingStyles(object):
         if type(self) == CanvasTextDrawingStyles:
             raise Exception('<CanvasTextDrawingStyles> must be subclassed.')
 
-        self._font = CSSFontParse('10pt sans-serif')
-
     @property
     def font(self):
         """
         Return the serialized form  of the current font, without displaying
         """
         return str(self._font)
+
+    @property
+    def rawFont(self):
+        return self._font
 
     @font.setter
     def font(self, val):
