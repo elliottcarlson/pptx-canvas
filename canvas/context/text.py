@@ -18,6 +18,7 @@ class CanvasText(object):
         TextMetrics measureText(DOMString text);
     };
     """
+    textCounter = 31337
 
     def __init__(self):
         if type(self) == CanvasText:
@@ -53,20 +54,26 @@ class CanvasText(object):
             "italic": "1"
         }
 
+        text_id = self.textCounter + 1
+
         shapes = self._canvas._slide._element.find('.//p:spTree', namespaces=self.nsmap)
         shape = Shape()
 
         shapes.append(
             shape._p.sp(
                 shape._p.nvSpPr(
-                    shape._p.cNvPr(id='1', name='Text 1'),
+                    shape._p.cNvPr(name='Shape %s' % str(text_id), id=str(text_id)),
                     shape._p.cNvSpPr(txBox='1'),
                     shape._p.nvPr()
                 ),
                 shape._p.spPr(
                     shape._a.xfrm(
                         shape._a.off(x=str(x), y=str(y)),
-                        shape._a.ext(cx="0", cy="0")
+                        shape._a.ext(cx="1270000", cy="1270000")
+                    ),
+                    shape._a.prstGeom(
+                        shape._a.avLst(),
+                        prst="rect"
                     ),
                     shape._a.noFill(),
                     shape._a.ln(
@@ -76,22 +83,35 @@ class CanvasText(object):
                 shape._p.txBody(
                     shape._a.bodyPr(
                         shape._a.noAutofit(),
-                        anchorCtr="0", anchor="t", bIns="0", lIns="0", rIns="0",
-                        tIns="0", wrap="none"
+                        anchorCtr="0", anchor="t", bIns="91425", lIns="91425",
+                        rIns="91425", tIns="91425", wrap="none"
                     ),
                     shape._a.lstStyle(),
                     shape._a.p(
                         shape._a.pPr(
+                            #shape._a.lnSpc(
+                            #    shape._a.spcPct(val="11500"),
+                            #),
                             shape._a.spcBef(
                                 shape._a.spcPts(val="0")
                             ),
-                            lvl="0", algn=align[self.textAlign]
+                            shape._a.spcAft(
+                                shape._a.spcPts(val="0")
+                            ),
+                            shape._a.buClr(
+                                shape._a.schemeClr(val="dk1")
+                            ),
+                            shape._a.buSzPct(val="25000"),
+                            shape._a.buFont(typeface=self._font.fontFamily),
+                            shape._a.buNone(),
+                            indent="0", lvl="0", marL="0", marR="0", rtl="0",
+                            algn=align[self.textAlign]
                         ),
                         shape._a.r(
                             shape._a.rPr(
                                 shape._a.solidFill(
                                     shape._a.srgbClr(
-                                        val=self.fillStyle.hex
+                                        val=self.strokeStyle.hex
                                     )
                                 ),
                                 shape._a.latin(typeface=self._font.fontFamily),
@@ -100,7 +120,9 @@ class CanvasText(object):
                                 shape._a.sym(typeface=self._font.fontFamily),
                                 sz=str((int(self._font.fontSize) * 100)),
                                 b=bold[self._font.fontWeight], lang="en",
-                                i=italic[self._font.fontStyle]),
+                                i=italic[self._font.fontStyle], u="none",
+                                cap="none", strike="noStrike"
+                            ),
                             shape._a.t(str(text))
                         )
                     )
